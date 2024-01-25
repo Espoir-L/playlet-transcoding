@@ -100,13 +100,25 @@ const main = async () => {
       default: { appenders: ['file', 'console'], level: 'debug' }
     }
   });
+  if (!fs.existsSync(inputDir)) {
+    fs.mkdirSync(inputDir, { recursive: true });
+    console.log(`目录 ${inputDir} 创建成功，请将需要转码的视频文件放到该目录下`);
+    return;
+  }
 
   createDirectorySync(outputDir);
   createDirectorySync(errorDir);
 
+
   console.log('开始遍历需要转码的文件');
   const totalFilesCount = recursiveFiles(inputDir, 'count');
   let completedFiles = 0;
+
+  if (totalFilesCount === 0) {
+    console.log(`请将需要转码的视频文件放到该目录下`);
+    return;
+  }
+
   console.log(`当前有${totalFilesCount}个文件需要转码`);
   const totalTime = totalFilesCount * 4 > 60
     ? `预计需要${((totalFilesCount * 4) / 60).toFixed(2)}min`
