@@ -6,6 +6,8 @@
 
 ```sh
 yarn # 安装依赖
+创建resource文件
+把需要转码的视频放到resource文件下
 node index.js # 执行脚本
 ```
 
